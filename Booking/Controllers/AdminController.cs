@@ -44,5 +44,48 @@ namespace FlightBookingSystem.Controllers
             }
             base.Dispose(disposing);
         }
+        public ActionResult EditTicket(int id)
+        {
+            // Find the ticket by ID
+            var ticket = _context.Tickets.SingleOrDefault(t => t.TicketId == id);
+
+            if (ticket == null)
+            {
+                return HttpNotFound(); // Return 404 if ticket is not found
+            }
+
+            // Pass the ticket to the view
+            return View(ticket);
+        }
+
+        // POST: Admin/EditTicket/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditTicket(Ticket updatedTicket)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(updatedTicket); // Return the form with validation messages
+            }
+
+            // Find the existing ticket in the database
+            var ticketInDb = _context.Tickets.SingleOrDefault(t => t.TicketId == updatedTicket.TicketId);
+
+            if (ticketInDb == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Update ticket properties
+            ticketInDb.TotalPassengers = updatedTicket.TotalPassengers;
+            ticketInDb.TotalCost = updatedTicket.TotalCost;
+            ticketInDb.Status = updatedTicket.Status;
+
+            // Save changes to the database
+            _context.SaveChanges();
+
+            // Redirect to the ManageTickets page
+            return RedirectToAction("ManageTickets");
+        }
     }
 }

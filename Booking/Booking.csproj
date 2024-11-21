@@ -350,10 +350,13 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Admin\ManageFlights.cshtml" />
+    <Content Include="Views\Admin\ManageUsers.cshtml" />
+    <Content Include="Views\Admin\ManageTickets.cshtml" />
+    <Content Include="Views\Admin\EditTicket.cshtml" />
+    <Content Include="Views\Flights\EditTicket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Views\Flights\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>

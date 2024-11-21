@@ -24,8 +24,11 @@
                 <td>@flight.ArrivalTime.ToString("yyyy-MM-dd HH:mm")</td>
                 <td>@flight.Price.ToString("C")</td>
                 <td>
-                    <a href="@Url.Action("Edit", "Flights", new { id = flight.FlightId })" class="btn btn-primary">Edit</a>
-                    <a href="@Url.Action("Delete", "Flights", new { id = flight.FlightId })" class="btn btn-danger"
+                    <!-- Update the controller to "Admin" for EditTicket -->
+                    <a href="@Url.Action("EditTicket", "Admin", new { id = flight.FlightId })" class="btn btn-primary">Edit</a>
+
+                    <!-- Update the controller to "Admin" for Delete -->
+                    <a href="@Url.Action("Delete", "Admin", new { id = flight.FlightId })" class="btn btn-danger"
                        onclick="return confirm('Are you sure you want to delete this flight?');">Delete</a>
                 </td>
             </tr>
