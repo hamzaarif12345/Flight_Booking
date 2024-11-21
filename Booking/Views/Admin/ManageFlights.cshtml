@@ -25,7 +25,7 @@
                 <td>@flight.Price.ToString("C")</td>
                 <td>
                     <!-- Update the controller to "Admin" for EditTicket -->
-                    <a href="@Url.Action("EditTicket", "Admin", new { id = flight.FlightId })" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("EditFlight", "Admin", new { id = flight.FlightId })" class="btn btn-primary">Edit</a>
 
                     <!-- Update the controller to "Admin" for Delete -->
                     <a href="@Url.Action("Delete", "Admin", new { id = flight.FlightId })" class="btn btn-danger"

@@ -1,17 +1,15 @@
-﻿
-@model IEnumerable<Booking.Ticket>
+﻿@model IEnumerable<Booking.Ticket>
 
 <h2>Manage Tickets</h2>
+
 <table class="table">
     <thead>
         <tr>
             <th>Ticket ID</th>
-            <th>User</th>
-            <th>Flight</th>
-            <th>Booking Date</th>
-            <th>Total Passengers</th>
+            <th>Passengers</th>
             <th>Total Cost</th>
             <th>Status</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -19,12 +17,12 @@
         {
             <tr>
                 <td>@ticket.TicketId</td>
-                <td>@ticket.User.FirstName @ticket.User.LastName</td>
-                <td>@ticket.Flight.FlightNumber</td>
-                <td>@ticket.BookingDate</td>
                 <td>@ticket.TotalPassengers</td>
                 <td>@ticket.TotalCost</td>
                 <td>@ticket.Status</td>
+                <td>
+                    @Html.ActionLink("Edit", "EditTicket", new { id = ticket.TicketId }, new { @class = "btn btn-primary" })
+                </td>
             </tr>
         }
     </tbody>

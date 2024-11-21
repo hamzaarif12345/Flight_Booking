@@ -87,5 +87,54 @@ namespace FlightBookingSystem.Controllers
             // Redirect to the ManageTickets page
             return RedirectToAction("ManageTickets");
         }
+
+        // GET: Admin/EditFlight/5
+        public ActionResult EditFlight(int id)
+        {
+            // Find the flight by ID
+            var flight = _context.Flights.SingleOrDefault(f => f.FlightId == id);
+
+            if (flight == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Pass the flight to the view
+            return View(flight);
+        }
+
+        // POST: Admin/EditFlight
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditFlight(Flight updatedFlight)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(updatedFlight);
+            }
+
+            // Find the existing flight in the database
+            var flightInDb = _context.Flights.SingleOrDefault(f => f.FlightId == updatedFlight.FlightId);
+
+            if (flightInDb == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Update flight properties
+            flightInDb.FlightNumber = updatedFlight.FlightNumber;
+            flightInDb.Origin = updatedFlight.Origin;
+            flightInDb.Destination = updatedFlight.Destination;
+            flightInDb.DepartureTime = updatedFlight.DepartureTime;
+            flightInDb.ArrivalTime = updatedFlight.ArrivalTime;
+            flightInDb.Price = updatedFlight.Price;
+
+            // Save changes to the database
+            _context.SaveChanges();
+
+            // Redirect to ManageFlights page
+            return RedirectToAction("ManageFlights");
+        }
+
     }
 }
