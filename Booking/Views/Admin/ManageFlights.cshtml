@@ -28,7 +28,7 @@
                     <a href="@Url.Action("EditFlight", "Admin", new { id = flight.FlightId })" class="btn btn-primary">Edit</a>
 
                     <!-- Update the controller to "Admin" for Delete -->
-                    <a href="@Url.Action("Delete", "Admin", new { id = flight.FlightId })" class="btn btn-danger"
+                    <a href="@Url.Action("DeleteFlight", "Admin", new { id = flight.FlightId })" class="btn btn-danger"
                        onclick="return confirm('Are you sure you want to delete this flight?');">Delete</a>
                 </td>
             </tr>

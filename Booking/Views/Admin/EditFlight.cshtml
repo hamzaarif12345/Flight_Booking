@@ -1,20 +1,15 @@
 ﻿@model Booking.Flight
-
 @{
     ViewBag.Title = "Edit Flight";
 }
-
 <h2>Edit Flight</h2>
-
 @using (Html.BeginForm("EditFlight", "Admin", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-
 <div class="form-horizontal">
     <h4>Flight</h4>
     <hr />
     @Html.HiddenFor(model => model.FlightId)
-
     <div class="form-group">
         @Html.LabelFor(model => model.FlightNumber, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -22,7 +17,6 @@
             @Html.ValidationMessageFor(model => model.FlightNumber, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.Origin, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -30,7 +24,6 @@
             @Html.ValidationMessageFor(model => model.Origin, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.Destination, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -38,7 +31,6 @@
             @Html.ValidationMessageFor(model => model.Destination, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.DepartureTime, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -70,7 +62,6 @@
             @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Save" class="btn btn-primary" />

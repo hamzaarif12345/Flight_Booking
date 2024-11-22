@@ -355,6 +355,7 @@
     <Content Include="Views\Admin\EditTicket.cshtml" />
     <Content Include="Views\Flights\EditTicket.cshtml" />
     <Content Include="Views\Admin\EditFlight.cshtml" />
+    <Content Include="Views\Admin\DeleteFlight.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

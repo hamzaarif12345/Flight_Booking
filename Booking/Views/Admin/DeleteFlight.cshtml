@@ -1,0 +1,36 @@
+﻿@model Booking.Flight
+
+<h2>Delete Flight</h2>
+
+<div>
+    <h4>Are you sure you want to delete this flight?</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Flight Number</dt>
+        <dd>@Model.FlightNumber</dd>
+
+        <dt>Origin</dt>
+        <dd>@Model.Origin</dd>
+
+        <dt>Destination</dt>
+        <dd>@Model.Destination</dd>
+
+        <dt>Departure Time</dt>
+        <dd>@Model.DepartureTime.ToString("yyyy-MM-dd HH:mm")</dd>
+
+        <dt>Arrival Time</dt>
+        <dd>@Model.ArrivalTime.ToString("yyyy-MM-dd HH:mm")</dd>
+
+        <dt>Price</dt>
+        <dd>@Model.Price.ToString("C")</dd>
+    </dl>
+
+    @using (Html.BeginForm("DeleteFlight", "Admin", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.FlightId)
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="@Url.Action("ManageFlights", "Admin")" class="btn btn-secondary">Cancel</a>
+    }
+</div>
+

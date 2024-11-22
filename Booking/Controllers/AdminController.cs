@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using Booking;
 
@@ -58,58 +59,14 @@ namespace FlightBookingSystem.Controllers
             return View(ticket);
         }
 
-        // POST: Admin/EditTicket/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditTicket(Ticket updatedTicket)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(updatedTicket); // Return the form with validation messages
-            }
-
-            // Find the existing ticket in the database
-            var ticketInDb = _context.Tickets.SingleOrDefault(t => t.TicketId == updatedTicket.TicketId);
-
-            if (ticketInDb == null)
-            {
-                return HttpNotFound();
-            }
-
-            // Update ticket properties
-            ticketInDb.TotalPassengers = updatedTicket.TotalPassengers;
-            ticketInDb.TotalCost = updatedTicket.TotalCost;
-            ticketInDb.Status = updatedTicket.Status;
-
-            // Save changes to the database
-            _context.SaveChanges();
-
-            // Redirect to the ManageTickets page
-            return RedirectToAction("ManageTickets");
-        }
-
-        // GET: Admin/EditFlight/5
-        public ActionResult EditFlight(int id)
-        {
-            // Find the flight by ID
-            var flight = _context.Flights.SingleOrDefault(f => f.FlightId == id);
-
-            if (flight == null)
-            {
-                return HttpNotFound();
-            }
-
-            // Pass the flight to the view
-            return View(flight);
-        }
-
-        // POST: Admin/EditFlight
+        // POST: Admin/EditFlight/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditFlight(Flight updatedFlight)
         {
             if (!ModelState.IsValid)
             {
+                // Return the form with validation messages if the model is invalid
                 return View(updatedFlight);
             }
 
@@ -132,9 +89,60 @@ namespace FlightBookingSystem.Controllers
             // Save changes to the database
             _context.SaveChanges();
 
-            // Redirect to ManageFlights page
+            // Redirect to the ManageFlights page
             return RedirectToAction("ManageFlights");
         }
+
+
+        // GET: Admin/EditFlight/5
+        public ActionResult EditFlight(int id)
+        {
+            // Find the flight by ID
+            var flight = _context.Flights.SingleOrDefault(f => f.FlightId == id);
+
+            if (flight == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Pass the flight to the view
+            return View(flight);
+        }
+
+        // GET: Admin/DeleteFlight/5
+        public ActionResult DeleteFlight(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var flight = _context.Flights.Find(id);
+            if (flight == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(flight);
+        }
+
+        // POST: Admin/DeleteFlight/5
+        [HttpPost, ActionName("DeleteFlight")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteFlightConfirmed(int id)
+        {
+            var flight = _context.Flights.Find(id);
+            if (flight != null)
+            {
+                _context.Flights.Remove(flight);
+                _context.SaveChanges();
+            }
+
+            // Redirect to ManageFlights
+            return RedirectToAction("ManageFlights");
+        }
+
+
 
     }
 }
