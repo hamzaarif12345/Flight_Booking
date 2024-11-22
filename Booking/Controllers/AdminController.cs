@@ -181,6 +181,80 @@ namespace FlightBookingSystem.Controllers
             // Redirect to ManageFlights
             return RedirectToAction("ManageFlights");
         }
+        public ActionResult EditUser(int id)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.UserId == id);
+            if (user == null)
+            {
+                return HttpNotFound("User not found.");
+            }
+            return View(user);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditUser(User updatedUser)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(updatedUser);
+            }
+
+            var existingUser = _context.Users.FirstOrDefault(u => u.UserId == updatedUser.UserId);
+            if (existingUser == null)
+            {
+                return HttpNotFound("User not found.");
+            }
+
+            // Update the user's role and status
+            existingUser.Role = updatedUser.Role;
+            existingUser.IsActive = updatedUser.IsActive;
+
+            try
+            {
+                _context.SaveChanges();
+                TempData["SuccessMessage"] = "User updated successfully!";
+                return RedirectToAction("ManageUsers");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "An error occurred while saving changes: " + ex.Message);
+                return View(updatedUser);
+            }
+        }
+        public ActionResult DeleteUser(int id)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.UserId == id);
+            if (user == null)
+            {
+                return HttpNotFound("User not found.");
+            }
+            return View(user);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteUserConfirmed(int id) // Ensure the parameter name is 'id'
+        {
+            var user = _context.Users.FirstOrDefault(u => u.UserId == id);
+            if (user == null)
+            {
+                return HttpNotFound("User not found.");
+            }
+
+            try
+            {
+                _context.Users.Remove(user);
+                _context.SaveChanges();
+                TempData["SuccessMessage"] = "User deleted successfully!";
+                return RedirectToAction("ManageUsers");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "An error occurred while deleting the user: " + ex.Message;
+                return RedirectToAction("ManageUsers");
+            }
+        }
+
 
 
 

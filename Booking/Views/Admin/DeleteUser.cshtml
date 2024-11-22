@@ -1,0 +1,13 @@
+﻿@model Booking.User
+
+<h2>Delete User</h2>
+
+<p>Are you sure you want to delete the user <strong>@Model.FirstName @Model.LastName</strong>?</p>
+@using (Html.BeginForm("DeleteUserConfirmed", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("id", Model.UserId) <!-- Ensure the field name matches the action parameter -->
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="@Url.Action("ManageUsers", "Admin")" class="btn btn-secondary">Cancel</a>
+}
+

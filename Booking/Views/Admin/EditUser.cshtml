@@ -1,0 +1,43 @@
+﻿
+@model Booking.User
+
+<h2>Edit User</h2>
+
+@using (Html.BeginForm("EditUser", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(m => m.UserId)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, "First Name")
+        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, "Last Name")
+        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, "Email")
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Role, "Role")
+        @Html.DropDownListFor(m => m.Role, new SelectList(new[] { "User", "Admin" }), new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.IsActive, "Status")
+        @Html.DropDownListFor(m => m.IsActive, new SelectList(new[]
+        {
+            new { Value = "true", Text = "Active" },
+            new { Value = "false", Text = "Inactive" }
+        }, "Value", "Text"), new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="@Url.Action("ManageUsers", "Admin")" class="btn btn-secondary">Cancel</a>
+}
