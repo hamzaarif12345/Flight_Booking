@@ -10,86 +10,72 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Flight</h4>
-        <hr />
-        @Html.HiddenFor(model => model.FlightId)
+<div class="form-horizontal">
+    <h4>Flight</h4>
+    <hr />
+    @Html.HiddenFor(model => model.FlightId)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FlightNumber, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FlightNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FlightNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Origin, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Origin, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Origin, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Destination, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Destination, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Destination, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DepartureTime, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.DepartureTime, new
-                {
-                    @class = "form-control",
-                    type = "datetime-local",
-                    @readonly = "readonly",
-                    id = "DepartureTime",
-                    value = Model.DepartureTime.ToString("yyyy-MM-ddTHH:mm")
-                })
-                @Html.ValidationMessageFor(model => model.DepartureTime, "", new { @class = "text-danger" })
-                <button type="button" class="btn btn-link" onclick="enableField('DepartureTime')">Change</button>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ArrivalTime, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.ArrivalTime, new
-                {
-                    @class = "form-control",
-                    type = "datetime-local",
-                    @readonly = "readonly",
-                    id = "ArrivalTime",
-                    value = Model.ArrivalTime.ToString("yyyy-MM-ddTHH:mm")
-                })
-                @Html.ValidationMessageFor(model => model.ArrivalTime, "", new { @class = "text-danger" })
-                <button type="button" class="btn btn-link" onclick="enableField('ArrivalTime')">Change</button>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-primary" />
-                @Html.ActionLink("Cancel", "ManageFlights", null, new { @class = "btn btn-secondary" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.FlightNumber, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FlightNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FlightNumber, "", new { @class = "text-danger" })
         </div>
     </div>
-}
 
-<script>
-    function enableField(fieldId) {
-        document.getElementById(fieldId).removeAttribute('readonly');
-    }
-</script>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Origin, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Origin, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Origin, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Destination, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Destination, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Destination, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DepartureTime, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.DepartureTime, "{0:yyyy-MM-ddTHH:mm}", new
+            {
+                @class = "form-control",
+                type = "datetime-local"
+            })
+            @Html.ValidationMessageFor(model => model.DepartureTime, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ArrivalTime, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.ArrivalTime, "{0:yyyy-MM-ddTHH:mm}", new
+            {
+                @class = "form-control",
+                type = "datetime-local"
+            })
+            @Html.ValidationMessageFor(model => model.ArrivalTime, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            @Html.ActionLink("Cancel", "ManageFlights", null, new { @class = "btn btn-secondary" })
+        </div>
+    </div>
+</div>
+}
