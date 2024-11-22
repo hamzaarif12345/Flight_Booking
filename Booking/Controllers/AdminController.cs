@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Booking;
@@ -45,19 +46,58 @@ namespace FlightBookingSystem.Controllers
             }
             base.Dispose(disposing);
         }
+        // GET: Admin/EditTicket/{id}
         public ActionResult EditTicket(int id)
         {
-            // Find the ticket by ID
+            // Fetch the ticket based on the id
             var ticket = _context.Tickets.SingleOrDefault(t => t.TicketId == id);
-
             if (ticket == null)
             {
-                return HttpNotFound(); // Return 404 if ticket is not found
+                return HttpNotFound();
             }
 
             // Pass the ticket to the view
             return View(ticket);
         }
+
+        // POST: Admin/EditTicket/{id}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        
+        public ActionResult EditTicket(Ticket ticket)
+        {
+            if (!ModelState.IsValid)
+            {
+                // If validation fails, return to the same view with the ticket data
+                return View(ticket);
+            }
+
+            // Fetch the existing ticket from the database
+            var existingTicket = _context.Tickets.FirstOrDefault(t => t.TicketId == ticket.TicketId);
+            if (existingTicket == null)
+            {
+                return HttpNotFound("Ticket not found.");
+            }
+
+            // Update the ticket properties
+            existingTicket.TotalPassengers = ticket.TotalPassengers;
+            existingTicket.TotalCost = ticket.TotalCost;
+            existingTicket.Status = ticket.Status;
+
+            try
+            {
+                // Save changes to the database
+                _context.SaveChanges();
+                TempData["SuccessMessage"] = "Ticket updated successfully!";
+                return RedirectToAction("ManageTickets");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "An error occurred while saving changes: " + ex.Message);
+                return View(ticket);
+            }
+        }
+
 
         // POST: Admin/EditFlight/5
         [HttpPost]
