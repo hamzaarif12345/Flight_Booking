@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -111,20 +112,20 @@ namespace FlightBookingSystem.Controllers
             }
 
             // Find the existing flight in the database
-            var flightInDb = _context.Flights.SingleOrDefault(f => f.FlightId == updatedFlight.FlightId);
+            var flightIn_context = _context.Flights.SingleOrDefault(f => f.FlightId == updatedFlight.FlightId);
 
-            if (flightInDb == null)
+            if (flightIn_context == null)
             {
                 return HttpNotFound();
             }
 
             // Update flight properties
-            flightInDb.FlightNumber = updatedFlight.FlightNumber;
-            flightInDb.Origin = updatedFlight.Origin;
-            flightInDb.Destination = updatedFlight.Destination;
-            flightInDb.DepartureTime = updatedFlight.DepartureTime;
-            flightInDb.ArrivalTime = updatedFlight.ArrivalTime;
-            flightInDb.Price = updatedFlight.Price;
+            flightIn_context.FlightNumber = updatedFlight.FlightNumber;
+            flightIn_context.Origin = updatedFlight.Origin;
+            flightIn_context.Destination = updatedFlight.Destination;
+            flightIn_context.DepartureTime = updatedFlight.DepartureTime;
+            flightIn_context.ArrivalTime = updatedFlight.ArrivalTime;
+            flightIn_context.Price = updatedFlight.Price;
 
             // Save changes to the database
             _context.SaveChanges();
@@ -255,6 +256,48 @@ namespace FlightBookingSystem.Controllers
             }
         }
 
+
+
+        public ActionResult Report()
+        {
+            var report = new Booking.Models.AdminReportViewModel
+            {
+                // Total Tickets Sold
+                TotalTicketsSold = _context.Tickets.Count(),
+
+                // Total Ticket Cost
+                TotalTicketCost = _context.Tickets.Sum(t => (decimal?)t.TotalCost) ?? 0,
+
+                // Average Ticket Cost
+                AverageTicketCost = _context.Tickets.Average(t => (decimal?)t.TotalCost) ?? 0,
+
+                // Highest Ticket Cost
+                HighestTicketCost = _context.Tickets.Max(t => (decimal?)t.TotalCost) ?? 0,
+
+                // Lowest Ticket Cost
+                LowestTicketCost = _context.Tickets.Min(t => (decimal?)t.TotalCost) ?? 0,
+
+                // Total Number of Passengers
+                TotalPassengers = _context.Tickets.Sum(t => (int?)t.TotalPassengers) ?? 0,
+
+                // Average Number of Passengers per Ticket
+                AveragePassengers = _context.Tickets.Average(t => (decimal?)t.TotalPassengers) ?? 0,
+
+                // Longest Flight Duration
+                LongestDuration = _context.Flights.Max(f => (double?)f.Duration) ?? 0,
+
+                // Shortest Flight Duration
+                ShortestDuration = _context.Flights.Min(f => (double?)f.Duration) ?? 0,
+
+                // Total Number of Flights
+                TotalFlights = _context.Flights.Count(),
+
+                // Total Number of Users
+                TotalUsers = _context.Users.Count()
+            };
+
+            return View(report);
+        }
 
 
 
