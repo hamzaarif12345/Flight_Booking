@@ -164,6 +164,10 @@ namespace FlightBookingSystem.Controllers
                 return HttpNotFound();
             }
 
+            // Check for associated tickets
+            var hasTickets = _context.Tickets.Any(t => t.FlightId == id);
+            ViewBag.HasTickets = hasTickets;
+
             return View(flight);
         }
 
@@ -175,13 +179,21 @@ namespace FlightBookingSystem.Controllers
             var flight = _context.Flights.Find(id);
             if (flight != null)
             {
+                // Check for associated tickets
+                var hasTickets = _context.Tickets.Any(t => t.FlightId == id);
+                if (hasTickets)
+                {
+                    TempData["ErrorMessage"] = "Cannot delete the flight as it has associated tickets.";
+                    return RedirectToAction("ManageFlights");
+                }
+
                 _context.Flights.Remove(flight);
                 _context.SaveChanges();
             }
 
-            // Redirect to ManageFlights
             return RedirectToAction("ManageFlights");
         }
+
         public ActionResult EditUser(int id)
         {
             var user = _context.Users.FirstOrDefault(u => u.UserId == id);
