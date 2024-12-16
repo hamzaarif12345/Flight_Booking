@@ -1,2 +1,2 @@
 # Booking
-## Flight Booking using .NET MVC Framework
+## Full stack Flight Booking Management web app using .NET MVC Framework.
